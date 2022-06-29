@@ -130,7 +130,6 @@ class ASPP(nn.Module):
 
     def forward(self, x):
         #histogram
-        hist = []
 
         size = x.shape[-2:]
         if self.pool_kernel_size is not None:
@@ -143,14 +142,12 @@ class ASPP(nn.Module):
         for conv in self.convs:
             res.append(conv(x))
         res[-1] = F.interpolate(res[-1], size=size, mode="bilinear", align_corners=False)
-        hist = res
         res = torch.cat(res, dim=1)
-        hist.append(res)
         #QConcat
         #res = self.qconcat(res)
         res = self.project(res)
         res = F.dropout(res, self.dropout, training=self.training) if self.dropout > 0 else res
-        return res, hist
+        return res
 
 class QConcat2(nn.Module):
     def __init__(self) -> None:

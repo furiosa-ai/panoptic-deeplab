@@ -251,7 +251,6 @@ class DeepLabV3PlusHead(nn.Module):
     def layers(self, features):
         # Reverse feature maps into top-down order (from low to high resolution)
         # histogram check
-        hist = {}
 
         for f in self.in_features[::-1]:
             x = features[f]
@@ -259,20 +258,17 @@ class DeepLabV3PlusHead(nn.Module):
             proj_x = self.decoder[f]["project_conv"](x)
             if self.decoder[f]["fuse_conv"] is None:
                 # This is aspp module
-                y = proj_x[0]
-                hist[f] = proj_x[1]
+                y = proj_x
             else:
                 # Upsample y
                 y = F.interpolate(y, size=proj_x.size()[2:], mode="bilinear", align_corners=False)
-                hist[f] = [proj_x, y]
                 y = torch.cat([proj_x, y], dim=1)
-                hist[f].append(y)
                 #bypass concat for quantization
                 #y = self.qconcat[f](proj_x, y)
                 y = self.decoder[f]["fuse_conv"](y)
         if not self.decoder_only:
             y = self.predictor(y)
-        return y, hist
+        return y
 
     def losses(self, predictions, targets):
         predictions = F.interpolate(

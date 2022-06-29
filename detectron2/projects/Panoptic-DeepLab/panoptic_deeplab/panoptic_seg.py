@@ -245,7 +245,7 @@ class PanopticDeepLab(nn.Module):
         
         #exporting onnx
         if self.onnx or self.network_only:
-            return sem_seg_results, center_results, offset_results, {'semantic':hist_sem, 'instance':hist_inst}
+            return sem_seg_results, center_results, offset_results
 
         return self.post_process(sem_seg_results,
                                 center_results, 
@@ -364,22 +364,22 @@ class PanopticDeepLabSemSegHead(DeepLabV3PlusHead):
             In training, returns (None, dict of losses)
             In inference, returns (CxHxW logits, {})
         """
-        y, hist = self.layers(features)
+        y = self.layers(features)
         if self.training:
             return None, self.losses(y, targets, weights)
         else:
             y = F.interpolate(
                 y, scale_factor=self.common_stride, mode="bilinear", align_corners=False
             )
-            return y, {}, hist
+            return y, {}
 
     def layers(self, features):
         assert self.decoder_only
         ################################################################################################
-        y, hist = super().layers(features)
+        y = super().layers(features)
         y = self.head(y)
         y = self.predictor(y)
-        return y, hist
+        return y
 
     def losses(self, predictions, targets, weights=None):
         predictions = F.interpolate(
@@ -550,7 +550,7 @@ class PanopticDeepLabInsEmbedHead(DeepLabV3PlusHead):
             In training, returns (None, dict of losses)
             In inference, returns (CxHxW logits, {})
         """
-        center, offset, hist = self.layers(features)
+        center, offset = self.layers(features)
         if self.training:
             return (
                 None,
@@ -568,18 +568,18 @@ class PanopticDeepLabInsEmbedHead(DeepLabV3PlusHead):
                 )
                 * self.common_stride
             )
-            return center, offset, {}, {}, hist
+            return center, offset, {}, {}
 
     def layers(self, features):
         assert self.decoder_only
-        y, hist = super().layers(features)
+        y = super().layers(features)
         # center
         center = self.center_head(y)
         center = self.center_predictor(center)
         # offset
         offset = self.offset_head(y)
         offset = self.offset_predictor(offset)
-        return center, offset, hist
+        return center, offset
 
     def center_losses(self, predictions, targets, weights):
         predictions = F.interpolate(
