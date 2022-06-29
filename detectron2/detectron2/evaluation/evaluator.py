@@ -180,17 +180,7 @@ def inference_on_dataset(
                 #expand dim.
                 #image = np.expand_dims(image, axis=0)
                 sem_seg_results, center_results, offset_results = sess.run(None, {'image': image} )
-                '''
-                histogram = sess.run(None, {'image': image} )
-                histogram = histogram[3:]
-                print(len(histogram))
-                hist = create_hist_dict(histogram)
-                print_hist(hist)
-                print(histogram[-1].dtype)
-                print(histogram[-1].max())
-                import sys
-                sys.exit()
-                '''
+                
                 #outputs of sess.run() are numpy arrays
                 sem_seg_results = torch.from_numpy(sem_seg_results).to(model.device)
                 center_results = torch.from_numpy(center_results).to(model.device)
@@ -203,18 +193,10 @@ def inference_on_dataset(
                 #resize outputs
                 #outputs = resize_output(model, sem_seg_results, center_results, outputs, 1024, 2048)
             else:
-                model.network_only=True
-                #nputs = resize_input(inputs)
+                model.network_only=False
+                print("IMAGE SIZE", inputs[0]['image'].size())
+                inputs = resize_input(inputs)
                 outputs = model(inputs)
-                hist = outputs[3]
-                print("MAX:",torch.max(hist[0]))
-                print("MIN:",torch.min(hist[0]))
-                x = hist['semantic']['res5'][0]
-                print(x.dtype)
-                print((x>100000).nonzero())
-                print_hist(hist)
-                import sys
-                sys.exit()
                 '''
                 model.network_only=True
                 sem_seg_results, center_results, offset_results = model(inputs)

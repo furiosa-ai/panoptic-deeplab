@@ -178,7 +178,7 @@ def main(args):
     if args.eval_only:
         
         sess = None
-        run_onnx = True
+        run_onnx = False
         patching = False
         cali = False
         qdq = False 
@@ -189,29 +189,22 @@ def main(args):
         std = model0.pixel_std.cpu().detach()
 
         if run_onnx == True:
-            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic-int8-cal500.onnx"
+            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
             #model_path = "/root/ljh726/PanopticDeepLab/warboy/output_stride_8/panoptic.onnx"
             print(ort.get_device())
             sess = ort.InferenceSession(model_path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
 
         if cali:
-
-            dataset_name = 'cityscapes_fine_panoptic_train'
-            #dataloader = Trainer.build_test_loader(cfg, dataset_name)
-            dataloader = glob.glob("datasets/cityscapes/leftImg8bit/train/*/*.png")
-            sample_dataloader = sample(dataloader, k=500)
-            #sample_indices = sample(range(2975), k=30)
-            print("Loading..")
+            dataloader = glob.glob("datasets/cityscapes_origin/leftImg8bit/train/*/*.png")
+            sample_dataloader = sample(dataloader, k=30)
             model = onnx.load_model(model_path)
-            print("start ptq")
            
             onnx_model_quantized = post_training_quantize(
                 model,
                 ({"image":preprocess_image(Image.open(path), mean, std).astype(np.float32)} for path in sample_dataloader),
             )
 
-            print("end ptq")
-            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic-int8-cal1000.onnx")
+            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic-int8-cal30.onnx")
             sys.exit()
         if qdq:
             model_fp32 = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic13.onnx"

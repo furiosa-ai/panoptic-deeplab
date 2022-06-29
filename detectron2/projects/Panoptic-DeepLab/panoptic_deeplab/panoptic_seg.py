@@ -81,15 +81,10 @@ class PanopticDeepLab(nn.Module):
         ):
             height = input_per_image.get("height")
             width = input_per_image.get("width")
-
-            if self.patch:
-                r = sem_seg_postprocess(sem_seg_result, image_size, height, width)
-                c = sem_seg_postprocess(center_result, image_size, height, width)
-                o = sem_seg_postprocess(offset_result, image_size, height, width)
-            else:
-                r = nearest_postprocess(sem_seg_result, image_size, height, width)
-                c = sem_seg_postprocess(center_result, image_size, height, width)
-                o = sem_seg_postprocess(offset_result, image_size, height, width)
+           
+            r = sem_seg_postprocess(sem_seg_result, image_size, height, width)
+            c = sem_seg_postprocess(center_result, image_size, height, width)
+            o = sem_seg_postprocess(offset_result, image_size, height, width)
 
             # Post-processing to get panoptic segmentation.
             panoptic_image, _ = get_panoptic_segmentation(

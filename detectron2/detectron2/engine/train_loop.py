@@ -275,9 +275,9 @@ class SimpleTrainer(TrainerBase):
         If you want to do something with the losses, you can wrap the model.
         """
         #resize input (INTER_AREA)
-        image = data[0]['image'].detach().cpu().numpy()
-        image = cv2.resize(np.transpose(image,(1,2,0)), dsize=(1024,512), interpolation=INTER_AREA)
-        data[0]['image'] = torch.from_numpy(np.transpose(image, (2,0,1))).to(self.model.device)
+        #image = data[0]['image'].detach().cpu().numpy()
+        #image = cv2.resize(np.transpose(image,(1,2,0)), dsize=(1024,512), interpolation=INTER_AREA)
+        #data[0]['image'] = torch.from_numpy(np.transpose(image, (2,0,1))).to(self.model.device)
         #data[0]['image'] = data[0]['image'][...,:512,:1024]
         loss_dict = self.model(data)
         if isinstance(loss_dict, torch.Tensor):
