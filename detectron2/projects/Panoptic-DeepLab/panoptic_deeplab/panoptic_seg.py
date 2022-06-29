@@ -209,7 +209,7 @@ class PanopticDeepLab(nn.Module):
             targets = None
             weights = None
 
-        sem_seg_results, sem_seg_losses = self.sem_seg_head(features, targets, weights)
+        sem_seg_results, sem_seg_losses, hist_sem = self.sem_seg_head(features, targets, weights)
         losses.update(sem_seg_losses)
 
         if not self.onnx and "center" in batched_inputs[0] and "offset" in batched_inputs[0]:
@@ -231,7 +231,7 @@ class PanopticDeepLab(nn.Module):
             offset_targets = None
             offset_weights = None
 
-        center_results, offset_results, center_losses, offset_losses = self.ins_embed_head(
+        center_results, offset_results, center_losses, offset_losses, hist_inst = self.ins_embed_head(
             features, center_targets, center_weights, offset_targets, offset_weights
         )
         losses.update(center_losses)
