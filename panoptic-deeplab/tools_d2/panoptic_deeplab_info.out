@@ -1,0 +1,794 @@
+[32m[05/25 17:56:59 detectron2]: [0mArguments: Namespace(confidence_threshold=0.5, config_file='configs/Cityscapes-PanopticSegmentation/panoptic_deeplab_X_65_os16_mg124_poly_90k_bs32_crop_512_1024_dsconv_369.yaml', input=['../../data/cityscape_berlin.png'], opts=['MODEL.WEIGHTS', 'output/xception65_dsconv_369/model_0029999.pth'], output=None, video_input=None, webcam=False)
+[32m[05/25 17:57:04 fvcore.common.checkpoint]: [0m[Checkpointer] Loading from output/xception65_dsconv_369/model_0029999.pth ...
+[32m[05/25 17:57:05 d2.checkpoint.c2_model_loading]: [0mFollowing weights matched with model:
+| Names in Model                                               | Names in Checkpoint                                                                                                                                   | Shapes                                          |
+|:-------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------|
+| backbone.block1.bn.*                                         | backbone.block1.bn.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                         | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.conv.weight                                  | backbone.block1.conv.weight                                                                                                                           | (128, 64, 1, 1)                                 |
+| backbone.block1.sep_conv1.block.bn_depth.*                   | backbone.block1.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (64,) () (64,) (64,) (64,)                      |
+| backbone.block1.sep_conv1.block.bn_point.*                   | backbone.block1.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.sep_conv1.block.depthwise.weight             | backbone.block1.sep_conv1.block.depthwise.weight                                                                                                      | (64, 1, 3, 3)                                   |
+| backbone.block1.sep_conv1.block.pointwise.weight             | backbone.block1.sep_conv1.block.pointwise.weight                                                                                                      | (128, 64, 1, 1)                                 |
+| backbone.block1.sep_conv2.block.bn_depth.*                   | backbone.block1.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.sep_conv2.block.bn_point.*                   | backbone.block1.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.sep_conv2.block.depthwise.weight             | backbone.block1.sep_conv2.block.depthwise.weight                                                                                                      | (128, 1, 3, 3)                                  |
+| backbone.block1.sep_conv2.block.pointwise.weight             | backbone.block1.sep_conv2.block.pointwise.weight                                                                                                      | (128, 128, 1, 1)                                |
+| backbone.block1.sep_conv3.block.bn_depth.*                   | backbone.block1.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.sep_conv3.block.bn_point.*                   | backbone.block1.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block1.sep_conv3.block.depthwise.weight             | backbone.block1.sep_conv3.block.depthwise.weight                                                                                                      | (128, 1, 3, 3)                                  |
+| backbone.block1.sep_conv3.block.pointwise.weight             | backbone.block1.sep_conv3.block.pointwise.weight                                                                                                      | (128, 128, 1, 1)                                |
+| backbone.block10.sep_conv1.block.bn_depth.*                  | backbone.block10.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv1.block.bn_point.*                  | backbone.block10.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv1.block.depthwise.weight            | backbone.block10.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block10.sep_conv1.block.pointwise.weight            | backbone.block10.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block10.sep_conv2.block.bn_depth.*                  | backbone.block10.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv2.block.bn_point.*                  | backbone.block10.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv2.block.depthwise.weight            | backbone.block10.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block10.sep_conv2.block.pointwise.weight            | backbone.block10.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block10.sep_conv3.block.bn_depth.*                  | backbone.block10.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv3.block.bn_point.*                  | backbone.block10.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block10.sep_conv3.block.depthwise.weight            | backbone.block10.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block10.sep_conv3.block.pointwise.weight            | backbone.block10.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block11.sep_conv1.block.bn_depth.*                  | backbone.block11.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv1.block.bn_point.*                  | backbone.block11.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv1.block.depthwise.weight            | backbone.block11.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block11.sep_conv1.block.pointwise.weight            | backbone.block11.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block11.sep_conv2.block.bn_depth.*                  | backbone.block11.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv2.block.bn_point.*                  | backbone.block11.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv2.block.depthwise.weight            | backbone.block11.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block11.sep_conv2.block.pointwise.weight            | backbone.block11.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block11.sep_conv3.block.bn_depth.*                  | backbone.block11.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv3.block.bn_point.*                  | backbone.block11.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block11.sep_conv3.block.depthwise.weight            | backbone.block11.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block11.sep_conv3.block.pointwise.weight            | backbone.block11.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block12.sep_conv1.block.bn_depth.*                  | backbone.block12.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv1.block.bn_point.*                  | backbone.block12.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv1.block.depthwise.weight            | backbone.block12.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block12.sep_conv1.block.pointwise.weight            | backbone.block12.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block12.sep_conv2.block.bn_depth.*                  | backbone.block12.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv2.block.bn_point.*                  | backbone.block12.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv2.block.depthwise.weight            | backbone.block12.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block12.sep_conv2.block.pointwise.weight            | backbone.block12.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block12.sep_conv3.block.bn_depth.*                  | backbone.block12.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv3.block.bn_point.*                  | backbone.block12.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block12.sep_conv3.block.depthwise.weight            | backbone.block12.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block12.sep_conv3.block.pointwise.weight            | backbone.block12.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block13.sep_conv1.block.bn_depth.*                  | backbone.block13.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv1.block.bn_point.*                  | backbone.block13.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv1.block.depthwise.weight            | backbone.block13.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block13.sep_conv1.block.pointwise.weight            | backbone.block13.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block13.sep_conv2.block.bn_depth.*                  | backbone.block13.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv2.block.bn_point.*                  | backbone.block13.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv2.block.depthwise.weight            | backbone.block13.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block13.sep_conv2.block.pointwise.weight            | backbone.block13.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block13.sep_conv3.block.bn_depth.*                  | backbone.block13.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv3.block.bn_point.*                  | backbone.block13.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block13.sep_conv3.block.depthwise.weight            | backbone.block13.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block13.sep_conv3.block.pointwise.weight            | backbone.block13.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block14.sep_conv1.block.bn_depth.*                  | backbone.block14.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv1.block.bn_point.*                  | backbone.block14.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv1.block.depthwise.weight            | backbone.block14.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block14.sep_conv1.block.pointwise.weight            | backbone.block14.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block14.sep_conv2.block.bn_depth.*                  | backbone.block14.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv2.block.bn_point.*                  | backbone.block14.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv2.block.depthwise.weight            | backbone.block14.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block14.sep_conv2.block.pointwise.weight            | backbone.block14.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block14.sep_conv3.block.bn_depth.*                  | backbone.block14.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv3.block.bn_point.*                  | backbone.block14.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block14.sep_conv3.block.depthwise.weight            | backbone.block14.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block14.sep_conv3.block.pointwise.weight            | backbone.block14.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block15.sep_conv1.block.bn_depth.*                  | backbone.block15.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv1.block.bn_point.*                  | backbone.block15.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv1.block.depthwise.weight            | backbone.block15.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block15.sep_conv1.block.pointwise.weight            | backbone.block15.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block15.sep_conv2.block.bn_depth.*                  | backbone.block15.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv2.block.bn_point.*                  | backbone.block15.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv2.block.depthwise.weight            | backbone.block15.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block15.sep_conv2.block.pointwise.weight            | backbone.block15.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block15.sep_conv3.block.bn_depth.*                  | backbone.block15.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv3.block.bn_point.*                  | backbone.block15.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block15.sep_conv3.block.depthwise.weight            | backbone.block15.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block15.sep_conv3.block.pointwise.weight            | backbone.block15.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block16.sep_conv1.block.bn_depth.*                  | backbone.block16.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv1.block.bn_point.*                  | backbone.block16.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv1.block.depthwise.weight            | backbone.block16.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block16.sep_conv1.block.pointwise.weight            | backbone.block16.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block16.sep_conv2.block.bn_depth.*                  | backbone.block16.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv2.block.bn_point.*                  | backbone.block16.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv2.block.depthwise.weight            | backbone.block16.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block16.sep_conv2.block.pointwise.weight            | backbone.block16.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block16.sep_conv3.block.bn_depth.*                  | backbone.block16.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv3.block.bn_point.*                  | backbone.block16.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block16.sep_conv3.block.depthwise.weight            | backbone.block16.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block16.sep_conv3.block.pointwise.weight            | backbone.block16.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block17.sep_conv1.block.bn_depth.*                  | backbone.block17.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv1.block.bn_point.*                  | backbone.block17.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv1.block.depthwise.weight            | backbone.block17.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block17.sep_conv1.block.pointwise.weight            | backbone.block17.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block17.sep_conv2.block.bn_depth.*                  | backbone.block17.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv2.block.bn_point.*                  | backbone.block17.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv2.block.depthwise.weight            | backbone.block17.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block17.sep_conv2.block.pointwise.weight            | backbone.block17.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block17.sep_conv3.block.bn_depth.*                  | backbone.block17.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv3.block.bn_point.*                  | backbone.block17.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block17.sep_conv3.block.depthwise.weight            | backbone.block17.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block17.sep_conv3.block.pointwise.weight            | backbone.block17.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block18.sep_conv1.block.bn_depth.*                  | backbone.block18.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv1.block.bn_point.*                  | backbone.block18.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv1.block.depthwise.weight            | backbone.block18.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block18.sep_conv1.block.pointwise.weight            | backbone.block18.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block18.sep_conv2.block.bn_depth.*                  | backbone.block18.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv2.block.bn_point.*                  | backbone.block18.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv2.block.depthwise.weight            | backbone.block18.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block18.sep_conv2.block.pointwise.weight            | backbone.block18.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block18.sep_conv3.block.bn_depth.*                  | backbone.block18.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv3.block.bn_point.*                  | backbone.block18.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block18.sep_conv3.block.depthwise.weight            | backbone.block18.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block18.sep_conv3.block.pointwise.weight            | backbone.block18.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block19.sep_conv1.block.bn_depth.*                  | backbone.block19.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv1.block.bn_point.*                  | backbone.block19.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv1.block.depthwise.weight            | backbone.block19.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block19.sep_conv1.block.pointwise.weight            | backbone.block19.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block19.sep_conv2.block.bn_depth.*                  | backbone.block19.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv2.block.bn_point.*                  | backbone.block19.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv2.block.depthwise.weight            | backbone.block19.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block19.sep_conv2.block.pointwise.weight            | backbone.block19.sep_conv2.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block19.sep_conv3.block.bn_depth.*                  | backbone.block19.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv3.block.bn_point.*                  | backbone.block19.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block19.sep_conv3.block.depthwise.weight            | backbone.block19.sep_conv3.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block19.sep_conv3.block.pointwise.weight            | backbone.block19.sep_conv3.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block2.bn.*                                         | backbone.block2.bn.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                         | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.conv.weight                                  | backbone.block2.conv.weight                                                                                                                           | (256, 128, 1, 1)                                |
+| backbone.block2.sep_conv1.block.bn_depth.*                   | backbone.block2.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (128,) () (128,) (128,) (128,)                  |
+| backbone.block2.sep_conv1.block.bn_point.*                   | backbone.block2.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.sep_conv1.block.depthwise.weight             | backbone.block2.sep_conv1.block.depthwise.weight                                                                                                      | (128, 1, 3, 3)                                  |
+| backbone.block2.sep_conv1.block.pointwise.weight             | backbone.block2.sep_conv1.block.pointwise.weight                                                                                                      | (256, 128, 1, 1)                                |
+| backbone.block2.sep_conv2.block.bn_depth.*                   | backbone.block2.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.sep_conv2.block.bn_point.*                   | backbone.block2.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.sep_conv2.block.depthwise.weight             | backbone.block2.sep_conv2.block.depthwise.weight                                                                                                      | (256, 1, 3, 3)                                  |
+| backbone.block2.sep_conv2.block.pointwise.weight             | backbone.block2.sep_conv2.block.pointwise.weight                                                                                                      | (256, 256, 1, 1)                                |
+| backbone.block2.sep_conv3.block.bn_depth.*                   | backbone.block2.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.sep_conv3.block.bn_point.*                   | backbone.block2.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block2.sep_conv3.block.depthwise.weight             | backbone.block2.sep_conv3.block.depthwise.weight                                                                                                      | (256, 1, 3, 3)                                  |
+| backbone.block2.sep_conv3.block.pointwise.weight             | backbone.block2.sep_conv3.block.pointwise.weight                                                                                                      | (256, 256, 1, 1)                                |
+| backbone.block20.bn.*                                        | backbone.block20.bn.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                        | (1024,) () (1024,) (1024,) (1024,)              |
+| backbone.block20.conv.weight                                 | backbone.block20.conv.weight                                                                                                                          | (1024, 728, 1, 1)                               |
+| backbone.block20.sep_conv1.block.bn_depth.*                  | backbone.block20.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block20.sep_conv1.block.bn_point.*                  | backbone.block20.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block20.sep_conv1.block.depthwise.weight            | backbone.block20.sep_conv1.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block20.sep_conv1.block.pointwise.weight            | backbone.block20.sep_conv1.block.pointwise.weight                                                                                                     | (728, 728, 1, 1)                                |
+| backbone.block20.sep_conv2.block.bn_depth.*                  | backbone.block20.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (728,) () (728,) (728,) (728,)                  |
+| backbone.block20.sep_conv2.block.bn_point.*                  | backbone.block20.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1024,) () (1024,) (1024,) (1024,)              |
+| backbone.block20.sep_conv2.block.depthwise.weight            | backbone.block20.sep_conv2.block.depthwise.weight                                                                                                     | (728, 1, 3, 3)                                  |
+| backbone.block20.sep_conv2.block.pointwise.weight            | backbone.block20.sep_conv2.block.pointwise.weight                                                                                                     | (1024, 728, 1, 1)                               |
+| backbone.block20.sep_conv3.block.bn_depth.*                  | backbone.block20.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1024,) () (1024,) (1024,) (1024,)              |
+| backbone.block20.sep_conv3.block.bn_point.*                  | backbone.block20.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1024,) () (1024,) (1024,) (1024,)              |
+| backbone.block20.sep_conv3.block.depthwise.weight            | backbone.block20.sep_conv3.block.depthwise.weight                                                                                                     | (1024, 1, 3, 3)                                 |
+| backbone.block20.sep_conv3.block.pointwise.weight            | backbone.block20.sep_conv3.block.pointwise.weight                                                                                                     | (1024, 1024, 1, 1)                              |
+| backbone.block21.sep_conv1.block.bn_depth.*                  | backbone.block21.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1024,) () (1024,) (1024,) (1024,)              |
+| backbone.block21.sep_conv1.block.bn_point.*                  | backbone.block21.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1536,) () (1536,) (1536,) (1536,)              |
+| backbone.block21.sep_conv1.block.depthwise.weight            | backbone.block21.sep_conv1.block.depthwise.weight                                                                                                     | (1024, 1, 3, 3)                                 |
+| backbone.block21.sep_conv1.block.pointwise.weight            | backbone.block21.sep_conv1.block.pointwise.weight                                                                                                     | (1536, 1024, 1, 1)                              |
+| backbone.block21.sep_conv2.block.bn_depth.*                  | backbone.block21.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1536,) () (1536,) (1536,) (1536,)              |
+| backbone.block21.sep_conv2.block.bn_point.*                  | backbone.block21.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1536,) () (1536,) (1536,) (1536,)              |
+| backbone.block21.sep_conv2.block.depthwise.weight            | backbone.block21.sep_conv2.block.depthwise.weight                                                                                                     | (1536, 1, 3, 3)                                 |
+| backbone.block21.sep_conv2.block.pointwise.weight            | backbone.block21.sep_conv2.block.pointwise.weight                                                                                                     | (1536, 1536, 1, 1)                              |
+| backbone.block21.sep_conv3.block.bn_depth.*                  | backbone.block21.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (1536,) () (1536,) (1536,) (1536,)              |
+| backbone.block21.sep_conv3.block.bn_point.*                  | backbone.block21.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                  | (2048,) () (2048,) (2048,) (2048,)              |
+| backbone.block21.sep_conv3.block.depthwise.weight            | backbone.block21.sep_conv3.block.depthwise.weight                                                                                                     | (1536, 1, 3, 3)                                 |
+| backbone.block21.sep_conv3.block.pointwise.weight            | backbone.block21.sep_conv3.block.pointwise.weight                                                                                                     | (2048, 1536, 1, 1)                              |
+| backbone.block3.bn.*                                         | backbone.block3.bn.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                         | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.conv.weight                                  | backbone.block3.conv.weight                                                                                                                           | (728, 256, 1, 1)                                |
+| backbone.block3.sep_conv1.block.bn_depth.*                   | backbone.block3.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (256,) () (256,) (256,) (256,)                  |
+| backbone.block3.sep_conv1.block.bn_point.*                   | backbone.block3.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.sep_conv1.block.depthwise.weight             | backbone.block3.sep_conv1.block.depthwise.weight                                                                                                      | (256, 1, 3, 3)                                  |
+| backbone.block3.sep_conv1.block.pointwise.weight             | backbone.block3.sep_conv1.block.pointwise.weight                                                                                                      | (728, 256, 1, 1)                                |
+| backbone.block3.sep_conv2.block.bn_depth.*                   | backbone.block3.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.sep_conv2.block.bn_point.*                   | backbone.block3.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.sep_conv2.block.depthwise.weight             | backbone.block3.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block3.sep_conv2.block.pointwise.weight             | backbone.block3.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block3.sep_conv3.block.bn_depth.*                   | backbone.block3.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.sep_conv3.block.bn_point.*                   | backbone.block3.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block3.sep_conv3.block.depthwise.weight             | backbone.block3.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block3.sep_conv3.block.pointwise.weight             | backbone.block3.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block4.sep_conv1.block.bn_depth.*                   | backbone.block4.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv1.block.bn_point.*                   | backbone.block4.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv1.block.depthwise.weight             | backbone.block4.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block4.sep_conv1.block.pointwise.weight             | backbone.block4.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block4.sep_conv2.block.bn_depth.*                   | backbone.block4.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv2.block.bn_point.*                   | backbone.block4.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv2.block.depthwise.weight             | backbone.block4.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block4.sep_conv2.block.pointwise.weight             | backbone.block4.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block4.sep_conv3.block.bn_depth.*                   | backbone.block4.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv3.block.bn_point.*                   | backbone.block4.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block4.sep_conv3.block.depthwise.weight             | backbone.block4.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block4.sep_conv3.block.pointwise.weight             | backbone.block4.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block5.sep_conv1.block.bn_depth.*                   | backbone.block5.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv1.block.bn_point.*                   | backbone.block5.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv1.block.depthwise.weight             | backbone.block5.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block5.sep_conv1.block.pointwise.weight             | backbone.block5.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block5.sep_conv2.block.bn_depth.*                   | backbone.block5.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv2.block.bn_point.*                   | backbone.block5.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv2.block.depthwise.weight             | backbone.block5.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block5.sep_conv2.block.pointwise.weight             | backbone.block5.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block5.sep_conv3.block.bn_depth.*                   | backbone.block5.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv3.block.bn_point.*                   | backbone.block5.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block5.sep_conv3.block.depthwise.weight             | backbone.block5.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block5.sep_conv3.block.pointwise.weight             | backbone.block5.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block6.sep_conv1.block.bn_depth.*                   | backbone.block6.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv1.block.bn_point.*                   | backbone.block6.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv1.block.depthwise.weight             | backbone.block6.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block6.sep_conv1.block.pointwise.weight             | backbone.block6.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block6.sep_conv2.block.bn_depth.*                   | backbone.block6.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv2.block.bn_point.*                   | backbone.block6.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv2.block.depthwise.weight             | backbone.block6.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block6.sep_conv2.block.pointwise.weight             | backbone.block6.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block6.sep_conv3.block.bn_depth.*                   | backbone.block6.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv3.block.bn_point.*                   | backbone.block6.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block6.sep_conv3.block.depthwise.weight             | backbone.block6.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block6.sep_conv3.block.pointwise.weight             | backbone.block6.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block7.sep_conv1.block.bn_depth.*                   | backbone.block7.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv1.block.bn_point.*                   | backbone.block7.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv1.block.depthwise.weight             | backbone.block7.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block7.sep_conv1.block.pointwise.weight             | backbone.block7.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block7.sep_conv2.block.bn_depth.*                   | backbone.block7.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv2.block.bn_point.*                   | backbone.block7.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv2.block.depthwise.weight             | backbone.block7.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block7.sep_conv2.block.pointwise.weight             | backbone.block7.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block7.sep_conv3.block.bn_depth.*                   | backbone.block7.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv3.block.bn_point.*                   | backbone.block7.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block7.sep_conv3.block.depthwise.weight             | backbone.block7.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block7.sep_conv3.block.pointwise.weight             | backbone.block7.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block8.sep_conv1.block.bn_depth.*                   | backbone.block8.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv1.block.bn_point.*                   | backbone.block8.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv1.block.depthwise.weight             | backbone.block8.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block8.sep_conv1.block.pointwise.weight             | backbone.block8.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block8.sep_conv2.block.bn_depth.*                   | backbone.block8.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv2.block.bn_point.*                   | backbone.block8.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv2.block.depthwise.weight             | backbone.block8.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block8.sep_conv2.block.pointwise.weight             | backbone.block8.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block8.sep_conv3.block.bn_depth.*                   | backbone.block8.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv3.block.bn_point.*                   | backbone.block8.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block8.sep_conv3.block.depthwise.weight             | backbone.block8.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block8.sep_conv3.block.pointwise.weight             | backbone.block8.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block9.sep_conv1.block.bn_depth.*                   | backbone.block9.sep_conv1.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv1.block.bn_point.*                   | backbone.block9.sep_conv1.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv1.block.depthwise.weight             | backbone.block9.sep_conv1.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block9.sep_conv1.block.pointwise.weight             | backbone.block9.sep_conv1.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block9.sep_conv2.block.bn_depth.*                   | backbone.block9.sep_conv2.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv2.block.bn_point.*                   | backbone.block9.sep_conv2.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv2.block.depthwise.weight             | backbone.block9.sep_conv2.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block9.sep_conv2.block.pointwise.weight             | backbone.block9.sep_conv2.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.block9.sep_conv3.block.bn_depth.*                   | backbone.block9.sep_conv3.block.bn_depth.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv3.block.bn_point.*                   | backbone.block9.sep_conv3.block.bn_point.{bias,num_batches_tracked,running_mean,running_var,weight}                                                   | (728,) () (728,) (728,) (728,)                  |
+| backbone.block9.sep_conv3.block.depthwise.weight             | backbone.block9.sep_conv3.block.depthwise.weight                                                                                                      | (728, 1, 3, 3)                                  |
+| backbone.block9.sep_conv3.block.pointwise.weight             | backbone.block9.sep_conv3.block.pointwise.weight                                                                                                      | (728, 728, 1, 1)                                |
+| backbone.bn1.*                                               | backbone.bn1.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                               | (32,) () (32,) (32,) (32,)                      |
+| backbone.bn2.*                                               | backbone.bn2.{bias,num_batches_tracked,running_mean,running_var,weight}                                                                               | (64,) () (64,) (64,) (64,)                      |
+| backbone.conv1.weight                                        | backbone.conv1.weight                                                                                                                                 | (32, 3, 3, 3)                                   |
+| backbone.conv2.weight                                        | backbone.conv2.weight                                                                                                                                 | (64, 32, 3, 3)                                  |
+| ins_embed_head.center_head.0.*                               | ins_embed_head.center_head.0.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                               | (128,) () (128,) (128,) (128,) (128,128,3,3)    |
+| ins_embed_head.center_head.1.*                               | ins_embed_head.center_head.1.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                               | (32,) () (32,) (32,) (32,) (32,128,3,3)         |
+| ins_embed_head.center_predictor.*                            | ins_embed_head.center_predictor.{bias,weight}                                                                                                         | (1,) (1,32,1,1)                                 |
+| ins_embed_head.decoder.res2.fuse_conv.depthwise.*            | ins_embed_head.decoder.res2.fuse_conv.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}            | (160,) () (160,) (160,) (160,) (160,1,5,5)      |
+| ins_embed_head.decoder.res2.fuse_conv.pointwise.*            | ins_embed_head.decoder.res2.fuse_conv.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}            | (128,) () (128,) (128,) (128,) (128,160,1,1)    |
+| ins_embed_head.decoder.res2.project_conv.*                   | ins_embed_head.decoder.res2.project_conv.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                   | (32,) () (32,) (32,) (32,) (32,256,1,1)         |
+| ins_embed_head.decoder.res3.fuse_conv.depthwise.*            | ins_embed_head.decoder.res3.fuse_conv.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}            | (320,) () (320,) (320,) (320,) (320,1,5,5)      |
+| ins_embed_head.decoder.res3.fuse_conv.pointwise.*            | ins_embed_head.decoder.res3.fuse_conv.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}            | (128,) () (128,) (128,) (128,) (128,320,1,1)    |
+| ins_embed_head.decoder.res3.project_conv.*                   | ins_embed_head.decoder.res3.project_conv.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                   | (64,) () (64,) (64,) (64,) (64,728,1,1)         |
+| ins_embed_head.decoder.res5.project_conv.convs.0.*           | ins_embed_head.decoder.res5.project_conv.convs.0.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}           | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| ins_embed_head.decoder.res5.project_conv.convs.1.depthwise.* | ins_embed_head.decoder.res5.project_conv.convs.1.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| ins_embed_head.decoder.res5.project_conv.convs.1.pointwise.* | ins_embed_head.decoder.res5.project_conv.convs.1.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| ins_embed_head.decoder.res5.project_conv.convs.2.depthwise.* | ins_embed_head.decoder.res5.project_conv.convs.2.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| ins_embed_head.decoder.res5.project_conv.convs.2.pointwise.* | ins_embed_head.decoder.res5.project_conv.convs.2.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| ins_embed_head.decoder.res5.project_conv.convs.3.depthwise.* | ins_embed_head.decoder.res5.project_conv.convs.3.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| ins_embed_head.decoder.res5.project_conv.convs.3.pointwise.* | ins_embed_head.decoder.res5.project_conv.convs.3.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight} | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| ins_embed_head.decoder.res5.project_conv.convs.4.1.*         | ins_embed_head.decoder.res5.project_conv.convs.4.1.{bias,weight}                                                                                      | (256,) (256,2048,1,1)                           |
+| ins_embed_head.decoder.res5.project_conv.project.*           | ins_embed_head.decoder.res5.project_conv.project.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}           | (256,) () (256,) (256,) (256,) (256,1280,1,1)   |
+| ins_embed_head.offset_head.depthwise.*                       | ins_embed_head.offset_head.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                       | (128,) () (128,) (128,) (128,) (128,1,5,5)      |
+| ins_embed_head.offset_head.pointwise.*                       | ins_embed_head.offset_head.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                       | (32,) () (32,) (32,) (32,) (32,128,1,1)         |
+| ins_embed_head.offset_predictor.*                            | ins_embed_head.offset_predictor.{bias,weight}                                                                                                         | (2,) (2,32,1,1)                                 |
+| sem_seg_head.decoder.res2.fuse_conv.depthwise.*              | sem_seg_head.decoder.res2.fuse_conv.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}              | (288,) () (288,) (288,) (288,) (288,1,5,5)      |
+| sem_seg_head.decoder.res2.fuse_conv.pointwise.*              | sem_seg_head.decoder.res2.fuse_conv.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}              | (256,) () (256,) (256,) (256,) (256,288,1,1)    |
+| sem_seg_head.decoder.res2.project_conv.*                     | sem_seg_head.decoder.res2.project_conv.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                     | (32,) () (32,) (32,) (32,) (32,256,1,1)         |
+| sem_seg_head.decoder.res3.fuse_conv.depthwise.*              | sem_seg_head.decoder.res3.fuse_conv.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}              | (320,) () (320,) (320,) (320,) (320,1,5,5)      |
+| sem_seg_head.decoder.res3.fuse_conv.pointwise.*              | sem_seg_head.decoder.res3.fuse_conv.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}              | (256,) () (256,) (256,) (256,) (256,320,1,1)    |
+| sem_seg_head.decoder.res3.project_conv.*                     | sem_seg_head.decoder.res3.project_conv.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                     | (64,) () (64,) (64,) (64,) (64,728,1,1)         |
+| sem_seg_head.decoder.res5.project_conv.convs.0.*             | sem_seg_head.decoder.res5.project_conv.convs.0.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}             | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| sem_seg_head.decoder.res5.project_conv.convs.1.depthwise.*   | sem_seg_head.decoder.res5.project_conv.convs.1.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| sem_seg_head.decoder.res5.project_conv.convs.1.pointwise.*   | sem_seg_head.decoder.res5.project_conv.convs.1.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| sem_seg_head.decoder.res5.project_conv.convs.2.depthwise.*   | sem_seg_head.decoder.res5.project_conv.convs.2.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| sem_seg_head.decoder.res5.project_conv.convs.2.pointwise.*   | sem_seg_head.decoder.res5.project_conv.convs.2.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| sem_seg_head.decoder.res5.project_conv.convs.3.depthwise.*   | sem_seg_head.decoder.res5.project_conv.convs.3.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (2048,) () (2048,) (2048,) (2048,) (2048,1,3,3) |
+| sem_seg_head.decoder.res5.project_conv.convs.3.pointwise.*   | sem_seg_head.decoder.res5.project_conv.convs.3.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}   | (256,) () (256,) (256,) (256,) (256,2048,1,1)   |
+| sem_seg_head.decoder.res5.project_conv.convs.4.1.*           | sem_seg_head.decoder.res5.project_conv.convs.4.1.{bias,weight}                                                                                        | (256,) (256,2048,1,1)                           |
+| sem_seg_head.decoder.res5.project_conv.project.*             | sem_seg_head.decoder.res5.project_conv.project.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}             | (256,) () (256,) (256,) (256,) (256,1280,1,1)   |
+| sem_seg_head.head.depthwise.*                                | sem_seg_head.head.depthwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                                | (256,) () (256,) (256,) (256,) (256,1,5,5)      |
+| sem_seg_head.head.pointwise.*                                | sem_seg_head.head.pointwise.{norm.bias,norm.num_batches_tracked,norm.running_mean,norm.running_var,norm.weight,weight}                                | (256,) () (256,) (256,) (256,) (256,256,1,1)    |
+| sem_seg_head.predictor.*                                     | sem_seg_head.predictor.{bias,weight}                                                                                                                  | (19,) (19,256,1,1)                              |
+Start to build onnx
+Built successfully
+===================================================================================================================
+Layer (type:depth-idx)                                            Output Shape              Param #
+===================================================================================================================
+PanopticDeepLab                                                   --                        --
+├─d2_xception_65: 1-1                                             --                        (recursive)
+│    └─Conv2d: 2-1                                                --                        (recursive)
+│    └─BatchNorm2d: 2-2                                           --                        (recursive)
+│    └─ReLU: 2-3                                                  --                        --
+│    └─Conv2d: 2-4                                                --                        (recursive)
+│    └─BatchNorm2d: 2-5                                           --                        (recursive)
+│    └─XceptionBlock: 2-6                                         --                        (recursive)
+│    │    └─Conv2d: 3-1                                           --                        (recursive)
+│    │    └─BatchNorm2d: 3-2                                      --                        (recursive)
+│    │    └─SeparableConv2d: 3-3                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-4                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-5                                  --                        (recursive)
+│    └─XceptionBlock: 2-7                                         --                        (recursive)
+│    │    └─Conv2d: 3-6                                           --                        (recursive)
+│    │    └─BatchNorm2d: 3-7                                      --                        (recursive)
+│    │    └─SeparableConv2d: 3-8                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-9                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-10                                 --                        (recursive)
+│    └─XceptionBlock: 2-8                                         --                        (recursive)
+│    │    └─Conv2d: 3-11                                          --                        (recursive)
+│    │    └─BatchNorm2d: 3-12                                     --                        (recursive)
+│    │    └─SeparableConv2d: 3-13                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-14                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-15                                 --                        (recursive)
+│    └─XceptionBlock: 2-9                                         --                        (recursive)
+│    │    └─SeparableConv2d: 3-16                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-17                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-18                                 --                        (recursive)
+│    └─XceptionBlock: 2-10                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-19                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-20                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-21                                 --                        (recursive)
+│    └─XceptionBlock: 2-11                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-22                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-23                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-24                                 --                        (recursive)
+│    └─XceptionBlock: 2-12                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-25                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-26                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-27                                 --                        (recursive)
+│    └─XceptionBlock: 2-13                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-28                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-29                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-30                                 --                        (recursive)
+│    └─XceptionBlock: 2-14                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-31                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-32                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-33                                 --                        (recursive)
+│    └─XceptionBlock: 2-15                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-34                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-35                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-36                                 --                        (recursive)
+│    └─XceptionBlock: 2-16                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-37                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-38                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-39                                 --                        (recursive)
+│    └─XceptionBlock: 2-17                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-40                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-41                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-42                                 --                        (recursive)
+│    └─XceptionBlock: 2-18                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-43                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-44                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-45                                 --                        (recursive)
+│    └─XceptionBlock: 2-19                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-46                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-47                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-48                                 --                        (recursive)
+│    └─XceptionBlock: 2-20                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-49                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-50                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-51                                 --                        (recursive)
+│    └─XceptionBlock: 2-21                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-52                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-53                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-54                                 --                        (recursive)
+│    └─XceptionBlock: 2-22                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-55                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-56                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-57                                 --                        (recursive)
+│    └─XceptionBlock: 2-23                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-58                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-59                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-60                                 --                        (recursive)
+│    └─XceptionBlock: 2-24                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-61                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-62                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-63                                 --                        (recursive)
+│    └─XceptionBlock: 2-25                                        --                        (recursive)
+│    │    └─Conv2d: 3-64                                          --                        (recursive)
+│    │    └─BatchNorm2d: 3-65                                     --                        (recursive)
+│    │    └─SeparableConv2d: 3-66                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-67                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-68                                 --                        (recursive)
+│    └─XceptionBlock: 2-26                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-69                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-70                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-71                                 --                        (recursive)
+├─PanopticDeepLabSemSegHead: 1-2                                  --                        (recursive)
+│    └─ModuleDict: 2-27                                           --                        --
+│    │    └─ModuleDict: 3-72                                      --                        90,272
+│    │    └─ModuleDict: 3-73                                      --                        137,792
+│    │    └─ModuleDict: 3-74                                      --                        3,019,520
+│    └─DepthwiseSeparableConv2d: 2-28                             --                        (recursive)
+│    │    └─Conv2d: 3-75                                          --                        (recursive)
+│    │    └─Conv2d: 3-76                                          --                        (recursive)
+│    └─Conv2d: 2-29                                               --                        (recursive)
+│    └─DeepLabCE: 2-30                                            --                        --
+│    │    └─CrossEntropyLoss: 3-77                                --                        --
+├─PanopticDeepLabInsEmbedHead: 1-3                                --                        (recursive)
+│    └─ModuleDict: 2-31                                           --                        --
+│    │    └─ModuleDict: 3-78                                      --                        33,312
+│    │    └─ModuleDict: 3-79                                      --                        96,576
+│    │    └─ModuleDict: 3-80                                      --                        3,019,520
+├─d2_xception_65: 1-4                                             [1, 2048, 64, 128]        --
+│    └─Conv2d: 2-32                                               [1, 32, 512, 1024]        864
+│    └─BatchNorm2d: 2-33                                          [1, 32, 512, 1024]        64
+│    └─ReLU: 2-34                                                 [1, 32, 512, 1024]        --
+│    └─Conv2d: 2-35                                               [1, 64, 512, 1024]        18,432
+│    └─BatchNorm2d: 2-36                                          [1, 64, 512, 1024]        128
+│    └─ReLU: 2-37                                                 [1, 64, 512, 1024]        --
+│    └─XceptionBlock: 2-38                                        [1, 128, 256, 512]        --
+│    │    └─SeparableConv2d: 3-81                                 [1, 128, 512, 1024]       9,152
+│    │    └─SeparableConv2d: 3-82                                 [1, 128, 512, 1024]       18,048
+│    │    └─SeparableConv2d: 3-83                                 [1, 128, 256, 512]        18,048
+│    │    └─Conv2d: 3-84                                          [1, 128, 256, 512]        8,192
+│    │    └─BatchNorm2d: 3-85                                     [1, 128, 256, 512]        256
+│    └─XceptionBlock: 2-39                                        [1, 256, 128, 256]        --
+│    │    └─SeparableConv2d: 3-86                                 [1, 256, 256, 512]        34,688
+│    │    └─SeparableConv2d: 3-87                                 [1, 256, 256, 512]        68,864
+│    │    └─SeparableConv2d: 3-88                                 [1, 256, 128, 256]        68,864
+│    │    └─Conv2d: 3-89                                          [1, 256, 128, 256]        32,768
+│    │    └─BatchNorm2d: 3-90                                     [1, 256, 128, 256]        512
+│    └─XceptionBlock: 2-40                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-91                                 [1, 728, 128, 256]        190,640
+│    │    └─SeparableConv2d: 3-92                                 [1, 728, 128, 256]        539,448
+│    │    └─SeparableConv2d: 3-93                                 [1, 728, 64, 128]         539,448
+│    │    └─Conv2d: 3-94                                          [1, 728, 64, 128]         186,368
+│    │    └─BatchNorm2d: 3-95                                     [1, 728, 64, 128]         1,456
+│    └─XceptionBlock: 2-41                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-96                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-97                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-98                                 [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-42                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-99                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-100                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-101                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-43                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-102                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-103                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-104                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-44                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-105                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-106                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-107                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-45                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-108                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-109                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-110                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-46                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-111                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-112                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-113                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-47                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-114                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-115                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-116                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-48                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-117                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-118                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-119                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-49                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-120                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-121                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-122                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-50                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-123                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-124                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-125                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-51                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-126                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-127                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-128                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-52                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-129                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-130                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-131                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-53                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-132                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-133                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-134                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-54                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-135                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-136                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-137                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-55                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-138                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-139                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-140                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-56                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-141                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-142                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-143                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-57                                        [1, 1024, 64, 128]        --
+│    │    └─SeparableConv2d: 3-144                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-145                                [1, 1024, 64, 128]        755,528
+│    │    └─SeparableConv2d: 3-146                                [1, 1024, 64, 128]        1,061,888
+│    │    └─Conv2d: 3-147                                         [1, 1024, 64, 128]        745,472
+│    │    └─BatchNorm2d: 3-148                                    [1, 1024, 64, 128]        2,048
+│    └─XceptionBlock: 2-58                                        [1, 2048, 64, 128]        --
+│    │    └─SeparableConv2d: 3-149                                [1, 1536, 64, 128]        1,587,200
+│    │    └─SeparableConv2d: 3-150                                [1, 1536, 64, 128]        2,379,264
+│    │    └─SeparableConv2d: 3-151                                [1, 2048, 64, 128]        3,166,720
+├─PanopticDeepLabSemSegHead: 1-5                                  [1, 19, 1024, 2048]       --
+│    └─DepthwiseSeparableConv2d: 2-59                             [1, 256, 256, 512]        --
+│    │    └─Conv2d: 3-152                                         [1, 256, 256, 512]        6,912
+│    │    └─Conv2d: 3-153                                         [1, 256, 256, 512]        66,048
+│    └─Conv2d: 2-60                                               [1, 19, 256, 512]         4,883
+├─PanopticDeepLabInsEmbedHead: 1-6                                [1, 1, 1024, 2048]        --
+│    └─Sequential: 2-61                                           [1, 32, 256, 512]         --
+│    │    └─Conv2d: 3-154                                         [1, 128, 256, 512]        147,712
+│    │    └─Conv2d: 3-155                                         [1, 32, 256, 512]         36,928
+│    └─Conv2d: 2-62                                               [1, 1, 256, 512]          33
+│    └─DepthwiseSeparableConv2d: 2-63                             [1, 32, 256, 512]         --
+│    │    └─Conv2d: 3-156                                         [1, 128, 256, 512]        3,456
+│    │    └─Conv2d: 3-157                                         [1, 32, 256, 512]         4,160
+│    └─Conv2d: 2-64                                               [1, 2, 256, 512]          66
+===================================================================================================================
+Total params: 38,956,838
+Trainable params: 38,956,838
+Non-trainable params: 0
+Total mult-adds (G): 368.84
+===================================================================================================================
+Input size (MB): 25.17
+Forward/backward pass size (MB): 23517.47
+Params size (MB): 155.83
+Estimated Total Size (MB): 23698.46
+===================================================================================================================
+MODEL SUMMARY: ===================================================================================================================
+Layer (type:depth-idx)                                            Output Shape              Param #
+===================================================================================================================
+PanopticDeepLab                                                   --                        --
+├─d2_xception_65: 1-1                                             --                        (recursive)
+│    └─Conv2d: 2-1                                                --                        (recursive)
+│    └─BatchNorm2d: 2-2                                           --                        (recursive)
+│    └─ReLU: 2-3                                                  --                        --
+│    └─Conv2d: 2-4                                                --                        (recursive)
+│    └─BatchNorm2d: 2-5                                           --                        (recursive)
+│    └─XceptionBlock: 2-6                                         --                        (recursive)
+│    │    └─Conv2d: 3-1                                           --                        (recursive)
+│    │    └─BatchNorm2d: 3-2                                      --                        (recursive)
+│    │    └─SeparableConv2d: 3-3                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-4                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-5                                  --                        (recursive)
+│    └─XceptionBlock: 2-7                                         --                        (recursive)
+│    │    └─Conv2d: 3-6                                           --                        (recursive)
+│    │    └─BatchNorm2d: 3-7                                      --                        (recursive)
+│    │    └─SeparableConv2d: 3-8                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-9                                  --                        (recursive)
+│    │    └─SeparableConv2d: 3-10                                 --                        (recursive)
+│    └─XceptionBlock: 2-8                                         --                        (recursive)
+│    │    └─Conv2d: 3-11                                          --                        (recursive)
+│    │    └─BatchNorm2d: 3-12                                     --                        (recursive)
+│    │    └─SeparableConv2d: 3-13                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-14                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-15                                 --                        (recursive)
+│    └─XceptionBlock: 2-9                                         --                        (recursive)
+│    │    └─SeparableConv2d: 3-16                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-17                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-18                                 --                        (recursive)
+│    └─XceptionBlock: 2-10                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-19                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-20                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-21                                 --                        (recursive)
+│    └─XceptionBlock: 2-11                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-22                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-23                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-24                                 --                        (recursive)
+│    └─XceptionBlock: 2-12                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-25                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-26                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-27                                 --                        (recursive)
+│    └─XceptionBlock: 2-13                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-28                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-29                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-30                                 --                        (recursive)
+│    └─XceptionBlock: 2-14                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-31                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-32                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-33                                 --                        (recursive)
+│    └─XceptionBlock: 2-15                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-34                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-35                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-36                                 --                        (recursive)
+│    └─XceptionBlock: 2-16                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-37                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-38                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-39                                 --                        (recursive)
+│    └─XceptionBlock: 2-17                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-40                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-41                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-42                                 --                        (recursive)
+│    └─XceptionBlock: 2-18                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-43                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-44                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-45                                 --                        (recursive)
+│    └─XceptionBlock: 2-19                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-46                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-47                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-48                                 --                        (recursive)
+│    └─XceptionBlock: 2-20                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-49                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-50                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-51                                 --                        (recursive)
+│    └─XceptionBlock: 2-21                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-52                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-53                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-54                                 --                        (recursive)
+│    └─XceptionBlock: 2-22                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-55                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-56                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-57                                 --                        (recursive)
+│    └─XceptionBlock: 2-23                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-58                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-59                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-60                                 --                        (recursive)
+│    └─XceptionBlock: 2-24                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-61                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-62                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-63                                 --                        (recursive)
+│    └─XceptionBlock: 2-25                                        --                        (recursive)
+│    │    └─Conv2d: 3-64                                          --                        (recursive)
+│    │    └─BatchNorm2d: 3-65                                     --                        (recursive)
+│    │    └─SeparableConv2d: 3-66                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-67                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-68                                 --                        (recursive)
+│    └─XceptionBlock: 2-26                                        --                        (recursive)
+│    │    └─SeparableConv2d: 3-69                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-70                                 --                        (recursive)
+│    │    └─SeparableConv2d: 3-71                                 --                        (recursive)
+├─PanopticDeepLabSemSegHead: 1-2                                  --                        (recursive)
+│    └─ModuleDict: 2-27                                           --                        --
+│    │    └─ModuleDict: 3-72                                      --                        90,272
+│    │    └─ModuleDict: 3-73                                      --                        137,792
+│    │    └─ModuleDict: 3-74                                      --                        3,019,520
+│    └─DepthwiseSeparableConv2d: 2-28                             --                        (recursive)
+│    │    └─Conv2d: 3-75                                          --                        (recursive)
+│    │    └─Conv2d: 3-76                                          --                        (recursive)
+│    └─Conv2d: 2-29                                               --                        (recursive)
+│    └─DeepLabCE: 2-30                                            --                        --
+│    │    └─CrossEntropyLoss: 3-77                                --                        --
+├─PanopticDeepLabInsEmbedHead: 1-3                                --                        (recursive)
+│    └─ModuleDict: 2-31                                           --                        --
+│    │    └─ModuleDict: 3-78                                      --                        33,312
+│    │    └─ModuleDict: 3-79                                      --                        96,576
+│    │    └─ModuleDict: 3-80                                      --                        3,019,520
+├─d2_xception_65: 1-4                                             [1, 2048, 64, 128]        --
+│    └─Conv2d: 2-32                                               [1, 32, 512, 1024]        864
+│    └─BatchNorm2d: 2-33                                          [1, 32, 512, 1024]        64
+│    └─ReLU: 2-34                                                 [1, 32, 512, 1024]        --
+│    └─Conv2d: 2-35                                               [1, 64, 512, 1024]        18,432
+│    └─BatchNorm2d: 2-36                                          [1, 64, 512, 1024]        128
+│    └─ReLU: 2-37                                                 [1, 64, 512, 1024]        --
+│    └─XceptionBlock: 2-38                                        [1, 128, 256, 512]        --
+│    │    └─SeparableConv2d: 3-81                                 [1, 128, 512, 1024]       9,152
+│    │    └─SeparableConv2d: 3-82                                 [1, 128, 512, 1024]       18,048
+│    │    └─SeparableConv2d: 3-83                                 [1, 128, 256, 512]        18,048
+│    │    └─Conv2d: 3-84                                          [1, 128, 256, 512]        8,192
+│    │    └─BatchNorm2d: 3-85                                     [1, 128, 256, 512]        256
+│    └─XceptionBlock: 2-39                                        [1, 256, 128, 256]        --
+│    │    └─SeparableConv2d: 3-86                                 [1, 256, 256, 512]        34,688
+│    │    └─SeparableConv2d: 3-87                                 [1, 256, 256, 512]        68,864
+│    │    └─SeparableConv2d: 3-88                                 [1, 256, 128, 256]        68,864
+│    │    └─Conv2d: 3-89                                          [1, 256, 128, 256]        32,768
+│    │    └─BatchNorm2d: 3-90                                     [1, 256, 128, 256]        512
+│    └─XceptionBlock: 2-40                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-91                                 [1, 728, 128, 256]        190,640
+│    │    └─SeparableConv2d: 3-92                                 [1, 728, 128, 256]        539,448
+│    │    └─SeparableConv2d: 3-93                                 [1, 728, 64, 128]         539,448
+│    │    └─Conv2d: 3-94                                          [1, 728, 64, 128]         186,368
+│    │    └─BatchNorm2d: 3-95                                     [1, 728, 64, 128]         1,456
+│    └─XceptionBlock: 2-41                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-96                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-97                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-98                                 [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-42                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-99                                 [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-100                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-101                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-43                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-102                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-103                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-104                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-44                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-105                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-106                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-107                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-45                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-108                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-109                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-110                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-46                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-111                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-112                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-113                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-47                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-114                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-115                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-116                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-48                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-117                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-118                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-119                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-49                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-120                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-121                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-122                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-50                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-123                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-124                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-125                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-51                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-126                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-127                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-128                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-52                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-129                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-130                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-131                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-53                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-132                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-133                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-134                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-54                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-135                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-136                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-137                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-55                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-138                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-139                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-140                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-56                                        [1, 728, 64, 128]         --
+│    │    └─SeparableConv2d: 3-141                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-142                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-143                                [1, 728, 64, 128]         539,448
+│    └─XceptionBlock: 2-57                                        [1, 1024, 64, 128]        --
+│    │    └─SeparableConv2d: 3-144                                [1, 728, 64, 128]         539,448
+│    │    └─SeparableConv2d: 3-145                                [1, 1024, 64, 128]        755,528
+│    │    └─SeparableConv2d: 3-146                                [1, 1024, 64, 128]        1,061,888
+│    │    └─Conv2d: 3-147                                         [1, 1024, 64, 128]        745,472
+│    │    └─BatchNorm2d: 3-148                                    [1, 1024, 64, 128]        2,048
+│    └─XceptionBlock: 2-58                                        [1, 2048, 64, 128]        --
+│    │    └─SeparableConv2d: 3-149                                [1, 1536, 64, 128]        1,587,200
+│    │    └─SeparableConv2d: 3-150                                [1, 1536, 64, 128]        2,379,264
+│    │    └─SeparableConv2d: 3-151                                [1, 2048, 64, 128]        3,166,720
+├─PanopticDeepLabSemSegHead: 1-5                                  [1, 19, 1024, 2048]       --
+│    └─DepthwiseSeparableConv2d: 2-59                             [1, 256, 256, 512]        --
+│    │    └─Conv2d: 3-152                                         [1, 256, 256, 512]        6,912
+│    │    └─Conv2d: 3-153                                         [1, 256, 256, 512]        66,048
+│    └─Conv2d: 2-60                                               [1, 19, 256, 512]         4,883
+├─PanopticDeepLabInsEmbedHead: 1-6                                [1, 1, 1024, 2048]        --
+│    └─Sequential: 2-61                                           [1, 32, 256, 512]         --
+│    │    └─Conv2d: 3-154                                         [1, 128, 256, 512]        147,712
+│    │    └─Conv2d: 3-155                                         [1, 32, 256, 512]         36,928
+│    └─Conv2d: 2-62                                               [1, 1, 256, 512]          33
+│    └─DepthwiseSeparableConv2d: 2-63                             [1, 32, 256, 512]         --
+│    │    └─Conv2d: 3-156                                         [1, 128, 256, 512]        3,456
+│    │    └─Conv2d: 3-157                                         [1, 32, 256, 512]         4,160
+│    └─Conv2d: 2-64                                               [1, 2, 256, 512]          66
+===================================================================================================================
+Total params: 38,956,838
+Trainable params: 38,956,838
+Non-trainable params: 0
+Total mult-adds (G): 368.84
+===================================================================================================================
+Input size (MB): 25.17
+Forward/backward pass size (MB): 23517.47
+Params size (MB): 155.83
+Estimated Total Size (MB): 23698.46
+===================================================================================================================
