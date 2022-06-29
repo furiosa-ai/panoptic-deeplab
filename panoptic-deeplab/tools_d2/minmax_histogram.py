@@ -7,7 +7,7 @@ from demo import setup_cfg, get_parser
 import torch
 from random import sample
 
-torch.manual_seed(1000)
+torch.manual_seed(100)
 
 mean = np.repeat(np.array([[[128]]]),3,axis=0)
 std = np.repeat(np.array([[[128]]]),3,axis=0)
@@ -18,7 +18,7 @@ args = get_parser().parse_args()
 cfg = setup_cfg(args)
 model = build_model(cfg)
 model.eval()
-dataset = glob.glob("datasets/cityscapes/leftImg8bit/train/*/*.png")
+dataset = glob.glob("datasets/cityscapes_origin/leftImg8bit/train/*/*.png")
 
 max_list = {'semantic':{'res5':[],'res3':[],'res2':[]},'instance':{'res5':[],'res3':[],'res2':[]}}
 
@@ -40,18 +40,18 @@ def get_max(histogram):
 init_list(max_list)
 
 
-for idx, file in enumerate(sample(dataset,20)):
+for idx, file in enumerate(sample(dataset,1)):
     print(file)
     if idx > 20:
         break
     img = np.array(Image.open(file))
-    
+    #preprocess
     img = img[:,:,::-1]
     img = img.transpose(2,0,1)
     img = (img - mean) / std
     img = img.astype(np.float32)
-    
     inputs = {"image": torch.as_tensor(img), "height": 1024, "width": 2048}
+    #get network outputs: sem_seg,center,offset,histograms
     model.network_only=True
     outputs = model([inputs])
     histogram = outputs[3]
