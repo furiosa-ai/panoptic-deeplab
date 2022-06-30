@@ -59,7 +59,7 @@ class ASPP(nn.Module):
         use_bias = norm == ""
         self.convs = nn.ModuleList()
         #qconcat
-        #self.qconcat = QConcat2()
+        self.qconcat = QConcat2()
         # conv 1x1
         self.convs.append(
             Conv2d(
@@ -142,9 +142,9 @@ class ASPP(nn.Module):
         for conv in self.convs:
             res.append(conv(x))
         res[-1] = F.interpolate(res[-1], size=size, mode="bilinear", align_corners=False)
-        res = torch.cat(res, dim=1)
+        #res = torch.cat(res, dim=1)
         #QConcat
-        #res = self.qconcat(res)
+        res = self.qconcat(res)
         res = self.project(res)
         res = F.dropout(res, self.dropout, training=self.training) if self.dropout > 0 else res
         return res

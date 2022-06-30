@@ -323,8 +323,8 @@ class DefaultPredictor:
                 d1 = torch.randn(1, 3, 512, 1024, device= 'cuda')
                 self.model.onnx = onnx
                 dir_path = "/root/ljh726/PanopticDeepLab/warboy/"
-                model_ver = "xception65_dsconv_4812_1024_2048/"
-                #model_ver = 'output_stride_8/'
+                #model_ver = "xception65_dsconv_4812_1024_2048/"
+                model_ver = 'q_concat/'
                 #model_ver = "test/"
                 #image = resize_input(image).to(self.model.device)
                 image = image.to(self.model.device)

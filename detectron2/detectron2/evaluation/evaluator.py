@@ -194,8 +194,8 @@ def inference_on_dataset(
                 #outputs = resize_output(model, sem_seg_results, center_results, outputs, 1024, 2048)
             else:
                 model.network_only=False
-                print("IMAGE SIZE", inputs[0]['image'].size())
-                inputs = resize_input(inputs)
+                #print("IMAGE SIZE", inputs[0]['image'].size())
+                #inputs = resize_input(inputs)
                 outputs = model(inputs)
                 '''
                 model.network_only=True

@@ -91,7 +91,7 @@ class DeepLabV3PlusHead(nn.Module):
         ), "Expected {} decoder_channels, got {}".format(
             len(self.in_features), len(decoder_channels)
         )
-        #self.qconcat = nn.ModuleDict()
+        self.qconcat = nn.ModuleDict()
         self.decoder = nn.ModuleDict()
 
         use_bias = norm == ""
@@ -127,13 +127,13 @@ class DeepLabV3PlusHead(nn.Module):
                 fuse_conv = None
             else:
                 #concat
-                '''
+                
                 self.qconcat[self.in_features[idx]] = QConcat(project_channels[idx],
                                                         decoder_channels[idx + 1],
                                                         project_channels[idx]+decoder_channels[idx+1],
                                                         kernel_size = 1,
                                                         )
-                '''
+                
 
                 project_conv = Conv2d(
                     in_channel,
@@ -262,9 +262,9 @@ class DeepLabV3PlusHead(nn.Module):
             else:
                 # Upsample y
                 y = F.interpolate(y, size=proj_x.size()[2:], mode="bilinear", align_corners=False)
-                y = torch.cat([proj_x, y], dim=1)
+                #y = torch.cat([proj_x, y], dim=1)
                 #bypass concat for quantization
-                #y = self.qconcat[f](proj_x, y)
+                y = self.qconcat[f](proj_x, y)
                 y = self.decoder[f]["fuse_conv"](y)
         if not self.decoder_only:
             y = self.predictor(y)

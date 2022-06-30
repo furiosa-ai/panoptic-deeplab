@@ -178,25 +178,24 @@ def main(args):
     if args.eval_only:
         
         sess = None
-        run_onnx = False
+        run_onnx = True
         patching = False
         cali = False
         qdq = False 
 
         #get pixel mean and std
-        model0 = Trainer.build_model(cfg)
-        mean = model0.pixel_mean.cpu().detach()
-        std = model0.pixel_std.cpu().detach()
+        mean = np.repeat(np.array([[[128]]]),3,axis=0)
+        std = np.repeat(np.array([[[128]]]),3,axis=0)
 
         if run_onnx == True:
-            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
-            #model_path = "/root/ljh726/PanopticDeepLab/warboy/output_stride_8/panoptic.onnx"
+            #model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
+            model_path = "/root/ljh726/PanopticDeepLab/warboy/q_concat/panoptic-int8-cal100-FAKE.onnx"
             print(ort.get_device())
             sess = ort.InferenceSession(model_path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
 
         if cali:
-            dataloader = glob.glob("datasets/cityscapes_origin/leftImg8bit/train/*/*.png")
-            sample_dataloader = sample(dataloader, k=30)
+            dataloader = glob.glob("datasets/cityscapes/leftImg8bit/train/*/*.png")
+            sample_dataloader = sample(dataloader, k=100)
             model = onnx.load_model(model_path)
            
             onnx_model_quantized = post_training_quantize(
@@ -204,7 +203,7 @@ def main(args):
                 ({"image":preprocess_image(Image.open(path), mean, std).astype(np.float32)} for path in sample_dataloader),
             )
 
-            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic-int8-cal30.onnx")
+            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/q_concat/panoptic-int8-cal100-FAKE.onnx")
             sys.exit()
         if qdq:
             model_fp32 = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic13.onnx"
@@ -241,7 +240,7 @@ def preprocess_image(image, mean, std):
     image = image[:,:,::-1]
     image = image.transpose(2,0,1)
     #normalize
-    image = (image - mean.numpy()) / std.numpy()
+    image = (image - mean) / std
     #expand dim
     #image = np.expand_dims(image, axis=0)
     return image
