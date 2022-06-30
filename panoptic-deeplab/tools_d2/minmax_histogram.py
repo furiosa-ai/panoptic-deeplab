@@ -8,6 +8,7 @@ import torch
 from random import sample
 import onnx
 from onnx import numpy_helper
+from detectron2.checkpoint import DetectionCheckpointer
 from scipy.stats import percentileofscore
 
 torch.manual_seed(1000)
@@ -92,6 +93,21 @@ def get_percentile(q_max_dict, max_list):
                     percentile[key][res].append(p)
     return percentile
 
+def save_percentile(dist, p):
+    from matplotlib import mlab
+    import matplotlib.pyplot as plt
+
+    perc = mlab.prctile(dist, p=p)
+
+    plt.plot(dist)
+    # Place red dots on the percentiles
+    plt.plot((len(dist)-1) * p/100., perc, 'ro')
+    plt.savefig("./debugging/max_dist.png")
+
+    import sys
+    sys.exit()
+
+
 mean = np.repeat(np.array([[[128]]]),3,axis=0)
 std = np.repeat(np.array([[[128]]]),3,axis=0)
 sess = ort.InferenceSession("/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic_hist.onnx")
@@ -101,6 +117,9 @@ model_quant = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2
 args = get_parser().parse_args()
 cfg = setup_cfg(args)
 model = build_model(cfg)
+checkpointer = DetectionCheckpointer(model)
+checkpointer.load(cfg.MODEL.WEIGHTS)
+
 model.eval()
 dataset = glob.glob("datasets/cityscapes/leftImg8bit/val/*/*.png")
 
@@ -108,7 +127,7 @@ dataset = glob.glob("datasets/cityscapes/leftImg8bit/val/*/*.png")
 init_list(max_list)
 
 
-for idx, file in enumerate(dataset):
+for idx, file in enumerate(sample(dataset,30)):
     print("%dth file: "%idx,file)
 
     img = np.array(Image.open(file))
@@ -138,3 +157,7 @@ percentile = get_percentile(q_max_dict, max_list)
 print_hist(max_list)
 print_hist(q_max_dict)
 print_hist(percentile)
+
+dist = q_max_dict['semantic']['res5'][0]
+p = percentile['semantic']['res5'][0]
+save_percentile(dist, p)
