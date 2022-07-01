@@ -14,7 +14,7 @@ from furiosa.quantizer.frontend.onnx import optimize_model, quantize, post_train
 import sys
 
 from detectron2.modeling import build_model
-from .demo import setup_cfg
+from ..demo import setup_cfg
 
 def get_parser():
     parser = argparse.ArgumentParser(description="Detectron2 demo for builtin configs")

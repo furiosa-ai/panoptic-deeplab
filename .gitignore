@@ -7,4 +7,5 @@ panoptic-deeplab/tools_d2/pretrained/
 data/
 warboy/
 *.onnx
-*.pth 
+*.pth
+*.out 
