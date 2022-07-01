@@ -1,5 +1,6 @@
 ## Ignore experiments and demo directory including images and model weights ##
 
+*.out
 *.png
 *.jpg
 panoptic-deeplab/tools_d2/experiments/
