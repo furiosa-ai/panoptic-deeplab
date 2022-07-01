@@ -9,4 +9,5 @@ panoptic-deeplab/**/*.out
 data/
 warboy/
 *.onnx
-*.pth 
+*.pth
+*.out 

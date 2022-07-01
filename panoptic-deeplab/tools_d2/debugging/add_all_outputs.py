@@ -16,12 +16,12 @@ def add_mid_nodes(path):
     onnx.checker.check_model(model)
     onnx.save(model, path[:-5]+'-test.onnx')
 
-def add_specific_node(path):
+def add_specific_node(path, name_list):
     model = onnx.load(path)
     value_info_protos = []
     shape_info = onnx.shape_inference.infer_shapes(model)
     for idx, node in enumerate(shape_info.graph.value_info):
-        if node.name == 'input.7_quantized' or node.name== 'input.11_dequantized':
+        if node.name in name_list:
             print(node.name)
             value_info_protos.append(node)
 
@@ -34,7 +34,5 @@ def add_specific_node(path):
 
 
 
-
-
 #add_mid_nodes(quant_sdk)
-add_specific_node(quant_sdk)
+add_specific_node(quant_sdk,['input.11_dequantized','input.7_dequantized'])
