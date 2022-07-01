@@ -5,6 +5,7 @@
 *.jpg
 panoptic-deeplab/tools_d2/experiments/
 panoptic-deeplab/tools_d2/pretrained/
+panoptic-deeplab/**/*.out
 data/
 warboy/
 *.onnx
