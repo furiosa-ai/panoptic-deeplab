@@ -137,7 +137,7 @@ class d2_xception_65(Xception65, Backbone):
         outputs = {}
         y = super().forward(x)
         for k in y.keys():
-            if k in self._out_features:
+            if k in self._out_features or k =='stem':
                 outputs[k] = y[k]
         return outputs
     

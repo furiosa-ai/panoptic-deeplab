@@ -14,7 +14,7 @@ from torch import nn
 from detectron2.utils.comm import get_world_size, is_main_process
 from detectron2.utils.logger import log_every_n_seconds
 
-#adda
+#additional modules
 import numpy as np
 import cv2
 from typing import Iterable
@@ -165,22 +165,15 @@ def inference_on_dataset(
             start_compute_time = time.perf_counter()
             
             if sess is not None or patching == True:
-                #Compare panoptic label list
-                #print("ORIGINAL INPUT SIZE")
-                #model.network_only = False
-                #model.onnx = False
-                #outputs = model(inputs)
-                #Use modified inference
                 
                 print("RESIZING OUTPUTS")
                 model.onnx = True
-                #outputs = modified_inference(model, inputs, sess=sess, patching=patching)
                 inputs = preprocess_input(inputs, model, resize=False)
                 image = inputs[0]['image'].numpy().astype(np.float32)
-                #expand dim.
-                #image = np.expand_dims(image, axis=0)
+                #ONNXruntime
                 sem_seg_results, center_results, offset_results = sess.run(None, {'image': image} )
                 
+                #POST-PROCESS
                 #outputs of sess.run() are numpy arrays
                 sem_seg_results = torch.from_numpy(sem_seg_results).to(model.device)
                 center_results = torch.from_numpy(center_results).to(model.device)
@@ -194,8 +187,8 @@ def inference_on_dataset(
                 #outputs = resize_output(model, sem_seg_results, center_results, outputs, 1024, 2048)
             else:
                 model.network_only=False
-                #print("IMAGE SIZE", inputs[0]['image'].size())
-                #inputs = resize_input(inputs)
+                print("IMAGE SIZE", inputs[0]['image'].size())
+                inputs = resize_input(inputs)
                 outputs = model(inputs)
                 '''
                 model.network_only=True

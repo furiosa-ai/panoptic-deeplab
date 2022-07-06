@@ -91,7 +91,7 @@ if __name__ == "__main__":
             start_time = time.time()
 
             #If we are exporting onnx, don't visualize
-            onnx = True
+            onnx = False
             if onnx:
                 predictions = demo.run_on_image(img, onnx= onnx)
                 import sys
@@ -99,7 +99,7 @@ if __name__ == "__main__":
             #Demo for onnx model
             sess = None
             import onnxruntime as ort
-            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic-int8-cal100.onnx"
+            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
             #model_path = "/root/ljh726/PanopticDeepLab/warboy/output_stride_8/panoptic.onnx"
             sess = ort.InferenceSession(model_path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
 

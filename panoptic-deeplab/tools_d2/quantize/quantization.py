@@ -108,8 +108,8 @@ if __name__=='__main__':
     model_fp32 = model_dir + "panoptic.onnx"
 
     if args.quant == 'sdk':
-        model_quant = model_fp32[:-5] + "-int8-cal" + args.cal + ".onnx"
+        model_quant = model_fp32[:-5] + "-sdk-cal" + args.cal + ".onnx"
         sdk_ptq(model_fp32, model_quant, args.data, args.cal)
     else:
-        model_quant = model_fp32[:-5] + "-qdq-cal" + args.cal + ".onnx"
+        model_quant = model_fp32[:-5] + "-ort-cal" + args.cal + ".onnx"
         ort_ptq(model_fp32, model_quant, args.data, args.cal)

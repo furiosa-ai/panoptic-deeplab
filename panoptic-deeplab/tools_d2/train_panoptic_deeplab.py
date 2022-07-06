@@ -180,7 +180,7 @@ def main(args):
         sess = None
         run_onnx = True
         patching = False
-        cali = False
+        cali = True
         qdq = False 
 
         #get pixel mean and std
@@ -188,13 +188,13 @@ def main(args):
         std = np.repeat(np.array([[[128]]]),3,axis=0)
 
         if run_onnx == True:
-            #model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
-            model_path = "/root/ljh726/PanopticDeepLab/warboy/q_concat/panoptic-int8-cal100-FAKE.onnx"
+            model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
+            #model_path = "/root/ljh726/PanopticDeepLab/warboy/q_concat/panoptic-int8-cal100-FAKE.onnx"
             print(ort.get_device())
             sess = ort.InferenceSession(model_path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
-
+            
         if cali:
-            dataloader = glob.glob("datasets/cityscapes/leftImg8bit/train/*/*.png")
+            dataloader = glob.glob("datasets/cityscapes/leftImg8bit/val/*/*.png")
             sample_dataloader = sample(dataloader, k=100)
             model = onnx.load_model(model_path)
            
@@ -203,14 +203,14 @@ def main(args):
                 ({"image":preprocess_image(Image.open(path), mean, std).astype(np.float32)} for path in sample_dataloader),
             )
 
-            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/q_concat/panoptic-int8-cal100-FAKE.onnx")
+            onnx.save_model(onnx_model_quantized, "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812/panoptic-sdk-test.onnx")
             sys.exit()
         if qdq:
-            model_fp32 = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic13.onnx"
-            model_quant = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic13-qdq-cal100.onnx"
+            model_fp32 = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic_add_name.onnx"
+            model_quant = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic13-ort-entropy-test.onnx"
             data_path = "datasets/cityscapes/leftImg8bit/train/*/*.png"
             cali_data_reader = CityscapesDataReader(data_path, mean, std)
-            quantize_static(model_fp32, model_quant, cali_data_reader, calibrate_method=CalibrationMethod.MinMax, per_channel=True)
+            quantize_static(model_fp32, model_quant, cali_data_reader, calibrate_method=CalibrationMethod.Entropy, per_channel=True)
             print("quantize done")
             sys.exit()
 
@@ -250,7 +250,7 @@ class CityscapesDataReader(CalibrationDataReader):
         super().__init__()
         self.preprocess_flag = True
         self.datalist = glob.glob(data_path)
-        self.sample_datalist = sample(self.datalist, k=100)
+        self.sample_datalist = sample(self.datalist, k=3)
         self.mean = mean
         self.std = std
         #self.datasize = 50

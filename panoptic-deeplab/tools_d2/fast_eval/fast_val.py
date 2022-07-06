@@ -17,19 +17,11 @@ from detectron2.projects.panoptic_deeplab import (
     PanopticDeeplabDatasetMapper,
     add_panoptic_deeplab_config,
 )
-
-def setup(args):
-    """
-    Create configs and perform basic setups.
-    """
-    cfg = get_cfg()
-    add_panoptic_deeplab_config(cfg)
-    cfg.merge_from_file(args.config_file)
-    if args.model is None:
-        cfg.merge_from_list(args.opts)
-    cfg.freeze()
-    default_setup(cfg, args)
-    return cfg
+import glob
+import numpy as np
+from detectron2.modeling.meta_arch.build import build_model
+from detectron2.checkpoint import DetectionCheckpointer
+import os
 
 def path_manager(name):
     extn = ".onnx"
@@ -43,68 +35,119 @@ def load_model(cfg=None, model_path=None):
     else:
         #load pytorch model
         return Trainer.build_model(cfg)
+        
 
-class FastTrainer(Trainer):
+
+# ----- NOTE : you can modify here ------------------------ #
+engine_path = '/root/ljh726/PanopticDeepLab/warboy/trt_model/panoptic.engine'
+DYNAMIC_SHAPE = False
+test_files = glob.glob( '/root/ljh726/PanopticDeepLab/panoptic-deeplab/tools_d2/datasets/cityscapes/leftImg8bit/val/*/*.png')
+
+def preprocessor( inputs ) :
+    img = inputs[0]['image']
+
+    #torch to numpy [C,H,W]
+    img = np.array(img).astype(dtype=np.float32)
+    #RGB to BGR
+    img = img[::-1,:,:]
+    #normalize img
+    mean = np.repeat(np.array([[[128]]]),3,axis=0)
+    std = np.repeat(np.array([[[128]]]),3,axis=0)
+    img = (img - mean) / std
+    img = np.array(img).astype(dtype=np.float32)
+
+    return img
+
+def get_imagelist(model, inputs):
+    size_divisibility = (
+    model.size_divisibility
+    if model.size_divisibility > 0
+    else model.backbone.size_divisibility
+    )
+    from detectron2.structures import BitMasks, ImageList, Instances
+    images = ImageList.from_tensors([inputs[0]['image']], size_divisibility)
+
+    return images
+
+def postprocessor( sem_seg_results, center_results, offset_results, model, inputs) :
+    sem_seg_results = torch.from_numpy(sem_seg_results).to('cuda')
+    center_results = torch.from_numpy(center_results).to('cuda')
+    offset_results = torch.from_numpy(offset_results).to('cuda')
+
+
+    imagelist = get_imagelist(model, inputs)
+    outputs = model.post_process(sem_seg_results,
+                                center_results,
+                                offset_results, 
+                                [{'height':inputs[0]['height'], 'width':inputs[0]['width']}],
+                                imagelist
+                                )
+    return outputs
+
+
+class Evaluator(Trainer):
     def __init__(self, cfg):
         super().__init__(cfg)
 
     @classmethod
-    def build_evaluator(cls, dataset_name, output_folder):
+    def build_evaluator(cls, cfg, dataset_name):
+        output_dir = os.path.join(cfg.OUTPUT_DIR, "inference")
         evaluator_list = []
-        evaluator_list.append(COCOPanopticEvaluator(dataset_name, output_folder))
+        evaluator_list.append(COCOPanopticEvaluator(dataset_name, output_dir))
         evaluator_list.append(CityscapesSemSegEvaluator(dataset_name))
         evaluator_list.append(CityscapesInstanceEvaluator(dataset_name))
 
         return DatasetEvaluators(evaluator_list)
 
     @classmethod
-    def inference(cls, model, datasize,dataloader, evaluator: DatasetEvaluators):
+    def inference(cls, model, datasize,dataloader, evaluator: DatasetEvaluators, sess=None):
+        evaluator.reset()
         for idx, inputs in enumerate(dataloader):
-            if idx < datasize:
+            print("idx:%d"%idx)
+            if sess is not None:
+                image = preprocessor(inputs)
+                sem_seg_results, center_results, offset_results = sess.run(None, {'image':image})
+                outputs = postprocessor(sem_seg_results, center_results, offset_results, model, inputs)
+            else:
                 outputs = model(inputs)
-                evaluator.process(outputs, inputs)
-            if torch.cuda.is_available():
-                torch.cuda.synchronize()
+
+            evaluator.process(inputs, outputs)
+        #unless len(gt_json)==len(dataset), no image id in annotations error occured
         results = evaluator.evaluate()
         return results
 
     @classmethod
-    def test(cls, model, dataset_name, datasize):
+    def test(cls, cfg, model, dataset_name, datasize,sess=None):
         print(type(model))
         print(type(dataset_name))
         print(type(datasize))
         dataloader = super().build_test_loader(cfg, dataset_name)
-        evaluator = super().build_evaluator(cfg, dataset_name)
-        results = cls.inference(model, datasize, dataloader, evaluator)
+        evaluator = cls.build_evaluator(cfg, dataset_name)
+        results = cls.inference(model, datasize, dataloader, evaluator, sess=sess)
         return results
 
+# --------------------------------------------------------- #
 
 
-if __name__=="__main__":
-    parser = argparse.ArgumentParser(description="Fast Evaluation for fp32 or quantized model")
-    parser.add_argument(
-        "--config-file",
-        default=None,
-        metavar="FILE",
-        help="path to config file",
-    )
-    parser.add_argument(
-        "--model",
-        default=None,
-        help="A file name to evaluate model",
-    )
-    args = parser.parse_args()
+def main() :
     cfg = setup(args)
-
-    model_path = path_manager(args.model)
-    dataset_name = "cityscapes_fine_panoptic_val"
-
-    model = load_model(cfg, model_path)
-    print(cfg)
-    print(model)
+    dataset_name = 'cityscapes_fine_panoptic_val'
+    model = build_model(cfg)
+    checkpointer = DetectionCheckpointer(model)
+    checkpointer.load(cfg.MODEL.WEIGHTS)    
+    model.eval()
     
-    with torch.no_grad():
-        res = FastTrainer.test(cfg, model, dataset_name, 30)
 
-#########
-# we need small train, val dataset and prediction.json
+    model_path = "/root/ljh726/PanopticDeepLab/warboy/xception65_dsconv_4812_1024_2048/panoptic.onnx"
+    sess = None
+    sess = ort.InferenceSession(model_path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+
+    with torch.no_grad():
+        res = Evaluator.test(cfg, model, dataset_name, 3, sess=sess)
+
+    return res
+
+if __name__ == '__main__':
+    args = default_argument_parser().parse_args()
+    main()
+
